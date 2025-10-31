@@ -1,12 +1,607 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Hello World!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpookyTel - Halloween Special Plans</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #ff6b35;
+            --dark-purple: #4a148c;
+            --spooky-black: #0a0a0a;
+            --ghost-white: #f5f5f5;
+            --pumpkin-orange: #ff8c42;
+            --blood-red: #8b0000;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--spooky-black) 0%, var(--dark-purple) 100%);
+            color: var(--ghost-white);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background bats */
+        .bat {
+            position: fixed;
+            font-size: 30px;
+            opacity: 0.3;
+            z-index: 0;
+            animation: fly 20s infinite linear;
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translateX(-100px) translateY(0);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(-50vh);
+            }
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary-orange);
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-orange);
+            text-shadow: 0 0 20px var(--primary-orange), 0 0 40px var(--primary-orange);
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--ghost-white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+            text-shadow: 0 0 10px var(--primary-orange);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary-orange), var(--pumpkin-orange), var(--primary-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+        }
+
+        @keyframes glow {
+            from {
+                filter: brightness(1);
+            }
+            to {
+                filter: brightness(1.3);
+            }
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--ghost-white);
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-orange), var(--blood-red));
+            color: var(--ghost-white);
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(255, 107, 53, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-orange);
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--primary-orange);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.3);
+            border-color: var(--pumpkin-orange);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Plans Section */
+        .plans {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--dark-purple);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .plan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--pumpkin-orange));
+        }
+
+        .plan-card.featured {
+            border-color: var(--primary-orange);
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .plan-card.featured::before {
+            height: 8px;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 50px rgba(255, 107, 53, 0.4);
+        }
+
+        .plan-card.featured:hover {
+            transform: translateY(-10px) scale(1.08);
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--ghost-white);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-period {
+            color: var(--ghost-white);
+            opacity: 0.7;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-features li::before {
+            content: '??';
+            margin-right: 0.5rem;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--blood-red));
+            color: var(--ghost-white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .plan-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-orange);
+            backdrop-filter: blur(10px);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: var(--primary-orange);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 2px solid var(--primary-orange);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--ghost-white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .plans-grid,
+            .features-grid,
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        /* Pumpkin decoration */
+        .pumpkin {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 40px;
+            animation: float 3s ease-in-out infinite;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Animated bats -->
+    <div class="bat">??</div>
+    <div class="bat" style="top: 20%; animation-delay: -5s;">??</div>
+    <div class="bat" style="top: 40%; animation-delay: -10s;">??</div>
+    <div class="bat" style="top: 60%; animation-delay: -15s;">??</div>
 
-<h1>Hello world!</h1>
-<p>This is the first file in my new Git Repo.</p>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">?? SpookyTel</div>
+            <ul class="nav-links">
+                <li><a href="#plans">Plans</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>BOO-st Your Connection!</h1>
+        <p class="subtitle">Spooktacular Internet & Phone Plans That'll Give You Chills</p>
+        <button class="cta-button" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'})">
+            Get Spooked! ??
+        </button>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Frightfully Fast Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">?</div>
+                <h3>Lightning Fast Speeds</h3>
+                <p>Up to 1 Gbps speeds that'll make your head spin faster than a haunted carousel!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">??</div>
+                <h3>Ghost-Level Reliability</h3>
+                <p>99.9% uptime guarantee - your connection won't disappear like a ghost in the night!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">??</div>
+                <h3>24/7 Support</h3>
+                <p>Our support team is always watching, ready to help you anytime, day or night!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">??</div>
+                <h3>No Tricks, Just Treats</h3>
+                <p>No hidden fees, no contracts, just honest pricing that won't scare you away!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">??</div>
+                <h3>Magical Installation</h3>
+                <p>Professional setup that's so smooth, it's practically magic!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">??</div>
+                <h3>Unlimited Data</h3>
+                <p>Stream, game, and browse to your heart's content - no limits, no fear!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans Section -->
+    <section class="plans" id="plans">
+        <h2 class="section-title">Spooktacular Plans</h2>
+        <div class="plans-grid">
+            <div class="plan-card">
+                <div class="plan-name">Trick Plan</div>
+                <div class="plan-price">$29<span style="font-size: 1.5rem">.99</span></div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>100 Mbps Internet</li>
+                    <li>Unlimited Data</li>
+                    <li>Basic Phone Service</li>
+                    <li>24/7 Support</li>
+                    <li>Free Router</li>
+                </ul>
+                <button class="plan-button">Choose Trick</button>
+            </div>
+            <div class="plan-card featured">
+                <div class="plan-name">Treat Plan</div>
+                <div class="plan-price">$49<span style="font-size: 1.5rem">.99</span></div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>500 Mbps Internet</li>
+                    <li>Unlimited Data</li>
+                    <li>Premium Phone Service</li>
+                    <li>24/7 Priority Support</li>
+                    <li>Free Router + Extender</li>
+                    <li>Streaming Apps Included</li>
+                </ul>
+                <button class="plan-button">Choose Treat</button>
+            </div>
+            <div class="plan-card">
+                <div class="plan-name">Nightmare Plan</div>
+                <div class="plan-price">$79<span style="font-size: 1.5rem">.99</span></div>
+                <div class="plan-period">per month</div>
+                <ul class="plan-features">
+                    <li>1 Gbps Internet</li>
+                    <li>Unlimited Data</li>
+                    <li>Business Phone Lines</li>
+                    <li>VIP 24/7 Support</li>
+                    <li>Premium Router Setup</li>
+                    <li>All Streaming Services</li>
+                    <li>Cloud Storage Included</li>
+                </ul>
+                <button class="plan-button">Choose Nightmare</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <h2 class="section-title">What Our Ghosts Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"SpookyTel's speeds are absolutely terrifying - in the best way! My streaming has never been smoother. ??"</p>
+                <p class="testimonial-author">- Sarah M., Happy Customer</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"I was scared to switch providers, but SpookyTel made it so easy. No tricks, just amazing service! ??"</p>
+                <p class="testimonial-author">- Michael T., Delighted User</p>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The support team is always there when I need them. It's like having a helpful ghost watching over my connection! ??"</p>
+                <p class="testimonial-author">- Jennifer L., Satisfied Subscriber</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h2 style="color: var(--primary-orange); margin-bottom: 1rem;">Get in Touch</h2>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Support</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Careers</a>
+            </div>
+            <p style="opacity: 0.7; margin-top: 2rem;">
+                &copy; 2024 SpookyTel. All rights reserved. ?? Stay spooky, stay connected!
+            </p>
+        </div>
+    </footer>
+
+    <!-- Floating pumpkin -->
+    <div class="pumpkin" onclick="alert('Boo! ??')">??</div>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.feature-card, .plan-card, .testimonial-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Smooth scroll for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
